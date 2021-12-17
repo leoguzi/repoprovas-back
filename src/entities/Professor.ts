@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
+import Discipline from './Discipline';
 
 @Entity('professors')
 export default class Professor {
@@ -6,4 +13,18 @@ export default class Professor {
   id: number;
   @Column()
   name: string;
+
+  @ManyToMany(() => Discipline, (discipline) => discipline.id)
+  @JoinTable({
+    name: 'professor_discipline',
+    joinColumn: {
+      name: 'id_professor',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'id_discipline',
+      referencedColumnName: 'id',
+    },
+  })
+  disciplines: Discipline[];
 }

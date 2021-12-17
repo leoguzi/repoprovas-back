@@ -8,7 +8,9 @@ async function getAllDisciplines(
   next: NextFunction
 ) {
   try {
-    const disciplines = await getRepository(Discipline).find();
+    const disciplines = await getRepository(Discipline).find({
+      relations: ['professors'],
+    });
     return res.status(200).send(disciplines);
   } catch (error) {
     next(error);
