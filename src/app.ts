@@ -5,7 +5,7 @@ import cors from 'cors';
 import categoriesRouter from './routers/categoriesRouter';
 import disciplinesRouter from './routers/disciplinesRouter';
 import professorsRouter from './routers/professorsRouter';
-
+import testsRouter from './routers/testsRouter';
 export async function init() {
   await connectDatabase();
 }
@@ -24,5 +24,7 @@ app.use('/disciplines', disciplinesRouter);
 //PROFESSORS
 
 app.use('/professors', professorsRouter);
+
+app.use('/tests', testsRouter);
 
 export default app;

@@ -9,6 +9,7 @@ import {
 import Category from './Category';
 import Professor from './Professor';
 import Discipline from './Discipline';
+
 @Entity('tests')
 export default class Test {
   @PrimaryGeneratedColumn()
@@ -22,13 +23,13 @@ export default class Test {
 
   @OneToOne(() => Category, { eager: true })
   @JoinColumn({ name: 'id_category' })
-  idCategory: Category;
+  category: Category;
 
   @OneToOne(() => Professor, { eager: true })
   @JoinColumn({ name: 'id_professor' })
-  idProfessor: Professor;
+  professor: Professor;
 
   @OneToOne(() => Discipline, { eager: true })
   @JoinColumn({ name: 'id_discipline' })
-  idDiscipline: Discipline;
+  discipline: Discipline;
 }

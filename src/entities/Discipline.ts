@@ -18,7 +18,7 @@ export default class Discipline {
   @Column()
   name: string;
 
-  @OneToOne(() => Period, { eager: true })
+  @OneToOne(() => Period)
   @JoinColumn({ name: 'id_period' })
   period: Period;
 

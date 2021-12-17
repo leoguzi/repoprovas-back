@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import Professor from '../entities/Professor';
-import { getRepository } from 'typeorm';
+import * as professorsService from '../services/professorsService';
 
 async function getAllProfessors(
   req: Request,
@@ -8,8 +7,8 @@ async function getAllProfessors(
   next: NextFunction
 ) {
   try {
-    const professor: Professor[] = await getRepository(Professor).find();
-    return res.status(200).send(professor);
+    const professors = await professorsService.fetchAllProfessors();
+    return res.status(200).send(professors);
   } catch (error) {
     next(error);
   }

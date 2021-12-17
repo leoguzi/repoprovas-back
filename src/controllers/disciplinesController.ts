@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import Discipline from '../entities/Discipline';
-import { getRepository } from 'typeorm';
+import * as disciplinesService from '../services/disciplinesService';
 
 async function getAllDisciplines(
   req: Request,
@@ -8,9 +7,7 @@ async function getAllDisciplines(
   next: NextFunction
 ) {
   try {
-    const disciplines = await getRepository(Discipline).find({
-      relations: ['professors'],
-    });
+    const disciplines = await disciplinesService.fetchAllDisciplines();
     return res.status(200).send(disciplines);
   } catch (error) {
     next(error);
