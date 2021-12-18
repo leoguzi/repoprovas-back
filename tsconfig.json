@@ -3,8 +3,7 @@
     "noImplicitAny": true,
     "esModuleInterop": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "target": "ES6",
-    "moduleResolution": "node"
-  }
+    "experimentalDecorators": true
+  },
+  "exclude": ["node_modules", "tests"]
 }
