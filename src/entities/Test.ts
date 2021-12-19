@@ -21,15 +21,15 @@ export default class Test {
   @Column()
   link: string;
 
-  @OneToOne(() => Category, { eager: true })
+  @OneToOne(() => Category)
   @JoinColumn({ name: 'id_category' })
   category: Category;
 
-  @OneToOne(() => Professor, { eager: true })
+  @OneToOne(() => Professor)
   @JoinColumn({ name: 'id_professor' })
   professor: Professor;
 
-  @OneToOne(() => Discipline, { eager: true })
+  @OneToOne(() => Discipline)
   @JoinColumn({ name: 'id_discipline' })
   discipline: Discipline;
 }

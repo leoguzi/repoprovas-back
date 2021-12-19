@@ -4,8 +4,10 @@ import {
   Column,
   ManyToMany,
   JoinTable,
+  getRepository,
 } from 'typeorm';
 import Discipline from './Discipline';
+import Test from './Test';
 
 @Entity('professors')
 export default class Professor {

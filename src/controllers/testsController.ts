@@ -15,4 +15,17 @@ async function createTest(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-export { createTest };
+async function getTestsByProfessor(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const idProfessor = Number(req.params.idProfessor);
+  if (!idProfessor) {
+    return res.status(400).send({ message: 'Bad request' });
+  }
+  const tests = await testsService.fetchTestsByProfessor(idProfessor);
+  return res.status(200).send(tests);
+}
+
+export { createTest, getTestsByProfessor };
