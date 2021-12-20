@@ -1,15 +1,9 @@
 import { getManager, getRepository, QueryBuilder, RelationId } from 'typeorm';
 import Category from '../entities/Category';
-import Discipline from '../entities/Discipline';
 import Test from '../entities/Test';
 
-interface TestsByCategory {
+interface TestsResponse {
   category: string;
-  tests: Test[];
-}
-
-interface TestsByPeriod {
-  discipline: string;
   tests: Test[];
 }
 
@@ -19,7 +13,7 @@ async function registerTest(test: Test) {
 
 async function fetchTestsByProfessor(
   idProfessor: number
-): Promise<TestsByCategory[]> {
+): Promise<TestsResponse[]> {
   const categories = await getRepository(Category).find();
 
   const categoriesTests = categories.map(async (category) => {
@@ -43,7 +37,9 @@ async function fetchTestsByProfessor(
   return testsByCategory;
 }
 
-async function fetchTestsByDiscipline(idDiscipline: number) {
+async function fetchTestsByDiscipline(
+  idDiscipline: number
+): Promise<TestsResponse[]> {
   const categories = await getRepository(Category).find();
 
   const categoriesTests = categories.map(async (category) => {

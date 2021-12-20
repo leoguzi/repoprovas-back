@@ -3,6 +3,7 @@ import { getRepository } from 'typeorm';
 
 async function fetchAllCategories(): Promise<Category[]> {
   const categories = await getRepository(Category).find();
+
   return categories;
 }
 

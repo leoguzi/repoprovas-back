@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { HttpStatusCode, HttpStatusText } from '../enums/http.enum';
 import * as testsService from '../services/testsService';
 import testSchema from '../validation/testSchema';
 
@@ -9,7 +10,7 @@ async function createTest(req: Request, res: Response, next: NextFunction) {
   }
   try {
     await testsService.registerTest(req.body);
-    return res.sendStatus(201);
+    return res.sendStatus(HttpStatusCode.CREATED);
   } catch (error) {
     next(error);
   }
@@ -22,10 +23,12 @@ async function getTestsByProfessor(
 ) {
   const idProfessor = Number(req.params.idProfessor);
   if (!idProfessor) {
-    return res.status(400).send({ message: 'Bad request' });
+    return res
+      .status(HttpStatusCode.BAD_REQUEST)
+      .send(HttpStatusText.BAD_REQUEST);
   }
   const tests = await testsService.fetchTestsByProfessor(idProfessor);
-  return res.status(200).send(tests);
+  return res.status(HttpStatusCode.OK).send(tests);
 }
 
 async function getTestsByDiscipline(
@@ -35,10 +38,12 @@ async function getTestsByDiscipline(
 ) {
   const idDiscipline = Number(req.params.idDiscipline);
   if (!idDiscipline) {
-    return res.status(400).send({ message: 'Bad request' });
+    return res
+      .status(HttpStatusCode.BAD_REQUEST)
+      .send(HttpStatusText.BAD_REQUEST);
   }
   const tests = await testsService.fetchTestsByDiscipline(idDiscipline);
-  return res.status(200).send(tests);
+  return res.status(HttpStatusCode.OK).send(tests);
 }
 
 export { createTest, getTestsByProfessor, getTestsByDiscipline };

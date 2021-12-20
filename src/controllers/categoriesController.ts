@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { HttpStatusCode } from '../enums/http.enum';
 import * as categoriesService from '../services/categoriesService';
 
 async function getAllCategories(
@@ -8,7 +9,7 @@ async function getAllCategories(
 ) {
   try {
     const categories = await categoriesService.fetchAllCategories();
-    return res.status(200).send(categories);
+    return res.status(HttpStatusCode.OK).send(categories);
   } catch (error) {
     next(error);
   }

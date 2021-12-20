@@ -19,7 +19,9 @@ async function fetchAllDisciplines(): Promise<Discipline[]> {
   return disciplines;
 }
 
-async function fetchDisciplinesByPeriod(period: number) {
+async function fetchDisciplinesByPeriod(
+  period: number
+): Promise<disciplineResponse[]> {
   const disciplines = await getRepository(Discipline).find({
     where: { period: { id: period } },
   });

@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { HttpStatusCode, HttpStatusText } from '../enums/http.enum';
 import * as disciplinesService from '../services/disciplinesService';
 
 async function getAllDisciplines(
@@ -8,7 +9,7 @@ async function getAllDisciplines(
 ) {
   try {
     const disciplines = await disciplinesService.fetchAllDisciplines();
-    return res.status(200).send(disciplines);
+    return res.status(HttpStatusCode.OK).send(disciplines);
   } catch (error) {
     next(error);
   }
@@ -21,13 +22,15 @@ async function getDisciplinesByPeriod(
 ) {
   const idPeriod = Number(req.params.idPeriod);
   if (!idPeriod) {
-    return res.status(400).send({ message: 'Bad Request!' });
+    return res
+      .status(HttpStatusCode.BAD_REQUEST)
+      .send(HttpStatusText.BAD_REQUEST);
   }
   try {
     const disciplines = await disciplinesService.fetchDisciplinesByPeriod(
       idPeriod
     );
-    return res.status(200).send(disciplines);
+    return res.status(HttpStatusCode.OK).send(disciplines);
   } catch (error) {
     next(error);
   }
