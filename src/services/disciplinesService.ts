@@ -11,9 +11,17 @@ interface disciplineResponse {
   period: Period;
   professors: Professor[];
 }
-async function fetchAllDisciplines(): Promise<disciplineResponse[]> {
+async function fetchAllDisciplines(): Promise<Discipline[]> {
   const disciplines = await getRepository(Discipline).find({
     relations: ['professors', 'period'],
+  });
+
+  return disciplines;
+}
+
+async function fetchDisciplinesByPeriod(period: number) {
+  const disciplines = await getRepository(Discipline).find({
+    where: { period: { id: period } },
   });
   const disciplinesWithNumberOfTests = disciplines.map(async (discipline) => {
     const tests = await getRepository(Test).find({
@@ -26,4 +34,4 @@ async function fetchAllDisciplines(): Promise<disciplineResponse[]> {
   return Promise.all(disciplinesWithNumberOfTests);
 }
 
-export { fetchAllDisciplines };
+export { fetchAllDisciplines, fetchDisciplinesByPeriod };
