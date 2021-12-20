@@ -8,7 +8,8 @@
     "build": "NODE_ENV=prod npx tsc --outDir dist",
     "test": "NODE_ENV=test npx jest -i --verbose",
     "test-watch": "NODE_ENV=test npx jest -i --verbose --watch",
-    "start": "NODE_ENV=prod NODE_TLS_REJECT_UNAUTHORIZED=0 node dist/server.js"
+    "start": "NODE_ENV=prod NODE_TLS_REJECT_UNAUTHORIZED=0 node dist/server.js",
+    "typeorm": "ts-node ./node_modules/typeorm/cli"
   },
   "keywords": [],
   "author": "",
