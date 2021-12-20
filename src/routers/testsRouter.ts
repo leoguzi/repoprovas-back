@@ -5,6 +5,9 @@ const testsRouter = Router();
 
 testsRouter.post('/', testsController.createTest);
 testsRouter.get('/professor/:idProfessor', testsController.getTestsByProfessor);
-testsRouter.get('/period/:idPeriod', testsController.getTestsByPeriod);
+testsRouter.get(
+  '/discipline/:idDiscipline',
+  testsController.getTestsByDiscipline
+);
 
 export default testsRouter;

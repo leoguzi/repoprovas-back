@@ -28,17 +28,17 @@ async function getTestsByProfessor(
   return res.status(200).send(tests);
 }
 
-async function getTestsByPeriod(
+async function getTestsByDiscipline(
   req: Request,
   res: Response,
   next: NextFunction
 ) {
-  const idPeriod = Number(req.params.idPeriod);
-  if (!idPeriod) {
+  const idDiscipline = Number(req.params.idDiscipline);
+  if (!idDiscipline) {
     return res.status(400).send({ message: 'Bad request' });
   }
-  const tests = await testsService.fetchTestsByPeriod(idPeriod);
+  const tests = await testsService.fetchTestsByDiscipline(idDiscipline);
   return res.status(200).send(tests);
 }
 
-export { createTest, getTestsByProfessor, getTestsByPeriod };
+export { createTest, getTestsByProfessor, getTestsByDiscipline };

@@ -43,45 +43,28 @@ async function fetchTestsByProfessor(
   return testsByCategory;
 }
 
-async function fetchTestsByPeriod(idPeriod: number) {
-  const disciplines = await getRepository(Discipline).find();
+async function fetchTestsByDiscipline(idDiscipline: number) {
   const categories = await getRepository(Category).find();
 
-  const disciplinesTests = disciplines.map(async (discipline) => {
-    const disciplineTests = await getRepository(Test).find({
+  const categoriesTests = categories.map(async (category) => {
+    const categoryTests = await getRepository(Test).find({
       where: {
-        discipline: { id: discipline.id },
+        discipline: { id: idDiscipline },
+        category: { id: category.id },
       },
+      relations: ['professor'],
     });
     return {
-      discipline: discipline,
-      tests: disciplineTests,
+      category: category.name,
+      tests: categoryTests,
     };
   });
-  const solvedPromisses = await Promise.all(disciplinesTests);
-  const periodTests = solvedPromisses.filter(
-    (discipline) =>
-      discipline.tests.length > 0 &&
-      discipline.discipline.period.id === idPeriod
+  const solvedPromisses = await Promise.all(categoriesTests);
+  const testsByCategory = solvedPromisses.filter(
+    (category) => category.tests.length > 0
   );
 
-  const tests = periodTests.map((line) => ({
-    discipline: line.discipline.name,
-    tests: categories.map((category) => ({
-      category: category.name,
-      tests: line.tests.map((test) => {
-        if (test.category.id === category.id) {
-          return {
-            name: test.name,
-            link: test.link,
-            professor: test.professor.name,
-          };
-        }
-      }),
-    })),
-  }));
-
-  return tests;
+  return testsByCategory;
 }
 
-export { registerTest, fetchTestsByProfessor, fetchTestsByPeriod };
+export { registerTest, fetchTestsByProfessor, fetchTestsByDiscipline };
