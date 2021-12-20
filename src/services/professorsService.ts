@@ -1,8 +1,16 @@
 import Professor from '../entities/Professor';
 import { getRepository } from 'typeorm';
 import Test from '../entities/Test';
+import Discipline from '../entities/Discipline';
 
-async function fetchAllProfessors() {
+interface professorsResponse {
+  id: number;
+  name: string;
+  testsQty: number;
+  disciplines: Discipline[];
+}
+
+async function fetchAllProfessors(): Promise<professorsResponse[]> {
   let professors = await getRepository(Professor).find();
 
   const professorsWithNumberOfTests = professors.map(async (professor) => {
@@ -10,7 +18,7 @@ async function fetchAllProfessors() {
       where: { professor: { id: professor.id } },
       relations: ['professor'],
     });
-    return { ...professor, testsNumber: tests.length };
+    return { ...professor, testsQty: tests.length };
   });
 
   return Promise.all(professorsWithNumberOfTests);
